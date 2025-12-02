@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="dashboard-container">
+
+    <header>
+      <h1>Finance Dashboard</h1>
+      <div id="themeToggle">🌙</div>
+    </header>
+
+    <!-- SUMMARY CARDS -->
+    <div class="summary">
+      <div class="card" id="incomeCard">Income: ₹0</div>
+      <div class="card" id="expenseCard">Expenses: ₹0</div>
+      <div class="card" id="balanceCard">Balance: ₹0</div>
+    </div>
+
+    <!-- ADD TRANSACTION -->
+    <div class="add-section">
+
+      <div class="tabs">
+        <button class="tab active" data-type="expense">Add Expense</button>
+        <button class="tab" data-type="income">Add Income</button>
+      </div>
+
+      <div class="inputs">
+        <input type="text" id="titleInput" placeholder="Title (e.g., Coffee)">
+        <input type="number" id="amountInput" placeholder="Amount (₹)">
+        <select id="categoryInput">
+          <option value="">Category</option>
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Essentials">Essentials</option>
+          <option value="Other">Other</option>
+        </select>
+        <button id="addBtn">Add</button>
+      </div>
+
+    </div>
+
+    <!-- TRANSACTION LIST -->
+    <h2>Transactions</h2>
+    <ul id="transactionList"></ul>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
