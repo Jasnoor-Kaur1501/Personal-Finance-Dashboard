@@ -8,47 +8,39 @@
 </head>
 
 <body>
+  <div class="page-wrap">
 
-  <div class="dashboard-container">
+    <h1 class="title">Finance Dashboard</h1>
 
-    <header>
-      <h1>Finance Dashboard</h1>
+    <div class="stats-row">
+      <div class="stat-card">Income: ₹<span id="income">0</span></div>
+      <div class="stat-card">Expenses: ₹<span id="expenses">0</span></div>
+      <div class="stat-card">Balance: ₹<span id="balance">0</span></div>
       <div id="themeToggle">🌙</div>
-    </header>
-
-    <!-- SUMMARY CARDS -->
-    <div class="summary">
-      <div class="card" id="incomeCard">Income: ₹0</div>
-      <div class="card" id="expenseCard">Expenses: ₹0</div>
-      <div class="card" id="balanceCard">Balance: ₹0</div>
     </div>
 
-    <!-- ADD TRANSACTION -->
-    <div class="add-section">
-
-      <div class="tabs">
-        <button class="tab active" data-type="expense">Add Expense</button>
-        <button class="tab" data-type="income">Add Income</button>
+    <div class="form-box">
+      <div class="type-toggle">
+        <button id="addExpenseBtn" class="toggle active">Add Expense</button>
+        <button id="addIncomeBtn" class="toggle">Add Income</button>
       </div>
 
-      <div class="inputs">
-        <input type="text" id="titleInput" placeholder="Title (e.g., Coffee)">
-        <input type="number" id="amountInput" placeholder="Amount (₹)">
-        <select id="categoryInput">
-          <option value="">Category</option>
-          <option value="Food">Food</option>
-          <option value="Travel">Travel</option>
-          <option value="Shopping">Shopping</option>
-          <option value="Essentials">Essentials</option>
-          <option value="Other">Other</option>
-        </select>
-        <button id="addBtn">Add</button>
-      </div>
+      <input type="text" id="titleInput" placeholder="Title (e.g., Coffee)" />
+      <input type="number" id="amountInput" placeholder="Amount (₹)" />
 
+      <select id="categorySelect">
+        <option disabled selected>Category</option>
+        <option>Food</option>
+        <option>Transport</option>
+        <option>Shopping</option>
+        <option>Travel</option>
+        <option>Other</option>
+      </select>
+
+      <button id="submitBtn" class="submit">Add Entry</button>
     </div>
 
-    <!-- TRANSACTION LIST -->
-    <h2>Transactions</h2>
+    <h2 class="sub-title">Transactions</h2>
     <ul id="transactionList"></ul>
 
   </div>
