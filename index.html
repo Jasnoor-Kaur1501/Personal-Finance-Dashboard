@@ -28,14 +28,17 @@
       <input type="text" id="titleInput" placeholder="Title (e.g., Coffee)" />
       <input type="number" id="amountInput" placeholder="Amount (₹)" />
 
-      <select id="categorySelect">
-        <option disabled selected>Category</option>
-        <option>Food</option>
-        <option>Transport</option>
-        <option>Shopping</option>
-        <option>Travel</option>
-        <option>Other</option>
-      </select>
+      <!-- Custom category dropdown (replace native <select>) -->
+<div id="categorySelect" class="custom-select" data-value="">
+  <button class="cs-selected">Category</button>
+  <ul class="cs-options">
+    <li data-value="Food">Food</li>
+    <li data-value="Transport">Transport</li>
+    <li data-value="Shopping">Shopping</li>
+    <li data-value="Travel">Travel</li>
+    <li data-value="Other">Other</li>
+  </ul>
+</div>
 
       <button id="submitBtn" class="submit">Add Entry</button>
     </div>
