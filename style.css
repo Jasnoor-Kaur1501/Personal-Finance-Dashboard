@@ -1,122 +1,133 @@
-/* GLOBAL */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  background: #0f0f0f;
-  font-family: "Inter", sans-serif;
-  padding: 40px;
-  color: white;
+  background: #1b1d22;        /* NOT full black */
+  font-family: Inter, sans-serif;
   display: flex;
   justify-content: center;
+  padding: 50px;
+  color: #fff;
 }
 
-.dashboard-container {
-  width: 480px;
+.page-wrap {
+  width: 550px;
 }
 
-/* HEADER */
-header {
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.stats-row {
   display: flex;
-  justify-content: space-between;
+  gap: 15px;
   align-items: center;
   margin-bottom: 25px;
 }
 
-#themeToggle {
-  padding: 6px 10px;
+.stat-card {
+  flex: 1;
+  padding: 14px 18px;
   background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 8px;
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#themeToggle {
+  padding: 10px 12px;
+  font-size: 20px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
   cursor: pointer;
 }
 
-/* SUMMARY CARDS */
-.summary {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 25px;
-}
-
-.card {
-  flex: 1;
-  padding: 16px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-}
-
-/* ADD SECTION */
-.add-section {
-  padding: 20px;
+.form-box {
   background: rgba(255,255,255,0.06);
+  padding: 25px;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(16px);
   margin-bottom: 30px;
 }
 
-.tabs {
+.type-toggle {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
 }
 
-.tab {
+.toggle {
   flex: 1;
   padding: 10px;
-  border-radius: 10px;
   background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
-  cursor: pointer;
-}
-
-.tab.active {
-  background: rgba(255,255,255,0.25);
-}
-
-.inputs input, .inputs select {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 12px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: white;
-}
-
-#addBtn {
-  width: 100%;
-  padding: 12px;
-  background: #5a5a5a;
   border-radius: 10px;
   border: none;
-  color: white;
+  color: #fff;
   cursor: pointer;
   transition: 0.25s ease;
 }
 
-#addBtn:hover {
-  background: #7a7a7a;
+.toggle.active {
+  background: rgba(255,255,255,0.22);
 }
 
-/* TRANSACTIONS */
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  color: #fff;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  background: #4a6cff;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.submit:hover {
+  background: #6c84ff;
+}
+
+.sub-title {
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: 500;
+}
+
 #transactionList {
   list-style: none;
-  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.transaction {
+.transaction-item {
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.15);
-  backdrop-filter: blur(8px);
-  padding: 14px;
+  padding: 12px 16px;
   border-radius: 12px;
-  margin-bottom: 10px;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.15);
   display: flex;
   justify-content: space-between;
-}
-
-.delete {
-  cursor: pointer;
-  opacity: 0.7;
 }
