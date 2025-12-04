@@ -1,49 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Finance Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finance Tracker</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <div class="page-wrap">
+  <div class="app-container">
 
-    <h1 class="title">Finance Dashboard</h1>
+    <h1>Finance Tracker</h1>
 
-    <div class="stats-row">
-      <div class="stat-card">Income: ₹<span id="income">0</span></div>
-      <div class="stat-card">Expenses: ₹<span id="expenses">0</span></div>
-      <div class="stat-card">Balance: ₹<span id="balance">0</span></div>
+    <!-- TABS -->
+    <div class="tabs">
+      <div class="tab active" data-type="expense">Expense</div>
+      <div class="tab" data-type="income">Income</div>
       <div id="themeToggle">🌙</div>
     </div>
 
-    <div class="form-box">
-      <div class="type-toggle">
-        <button id="addExpenseBtn" class="toggle active">Add Expense</button>
-        <button id="addIncomeBtn" class="toggle">Add Income</button>
-      </div>
-
-      <input type="text" id="titleInput" placeholder="Title (e.g., Coffee)" />
-      <input type="number" id="amountInput" placeholder="Amount (₹)" />
-
-      <!-- Custom category dropdown (replace native <select>) -->
-<div id="categorySelect" class="custom-select" data-value="">
-  <button class="cs-selected">Category</button>
-  <ul class="cs-options">
-    <li data-value="Food">Food</li>
-    <li data-value="Transport">Transport</li>
-    <li data-value="Shopping">Shopping</li>
-    <li data-value="Travel">Travel</li>
-    <li data-value="Other">Other</li>
-  </ul>
-</div>
-
-      <button id="submitBtn" class="submit">Add Entry</button>
+    <!-- INPUTS -->
+    <div class="input-box">
+      <input id="titleInput" type="text" placeholder="Title (e.g., Salary, Groceries)" />
+      <input id="amountInput" type="number" placeholder="Amount in ₹" />
+      <select id="categoryInput">
+        <option value="">Select category…</option>
+        <option>Food</option>
+        <option>Travel</option>
+        <option>Salary</option>
+        <option>Shopping</option>
+        <option>Bills</option>
+      </select>
+      <button id="addBtn">Add</button>
     </div>
 
-    <h2 class="sub-title">Transactions</h2>
+    <!-- SUMMARY CARDS -->
+    <div class="cards">
+      <div class="card" id="incomeCard">Income: ₹0</div>
+      <div class="card" id="expenseCard">Expenses: ₹0</div>
+      <div class="card" id="balanceCard">Balance: ₹0</div>
+    </div>
+
+    <!-- LIST -->
     <ul id="transactionList"></ul>
 
   </div>
