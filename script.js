@@ -1,22 +1,40 @@
+/* ============================
+   LOAD DATA
+============================ */
+
 let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 let currentType = "expense";
 
-const titleInput = document.getElementById("titleInput");
-const amountInput = document.getElementById("amountInput");
-const categoryInput = document.getElementById("categoryInput");
-const addBtn = document.getElementById("addBtn");
-const list = document.getElementById("transactionList");
+/* ============================
+   GET ELEMENTS
+============================ */
 
-const incomeCard = document.getElementById("incomeCard");
-const expenseCard = document.getElementById("expenseCard");
-const balanceCard = document.getElementById("balanceCard");
+const titleInput     = document.getElementById("titleInput");
+const amountInput    = document.getElementById("amountInput");
+const categoryInput  = document.getElementById("categoryInput");
+const addBtn         = document.getElementById("addBtn");
 
-/* FORMAT MONEY */
+const incomeCard     = document.getElementById("incomeCard");
+const expenseCard    = document.getElementById("expenseCard");
+const balanceCard    = document.getElementById("balanceCard");
+
+const list           = document.getElementById("transactionList");
+
+/* DEBUG — CONFIRM JS LOADED */
+console.log("JS LOADED SUCCESSFULLY");
+
+/* ============================
+   FORMAT ₹ MONEY
+============================ */
+
 function formatMoney(num) {
   return "₹" + num.toLocaleString("en-IN");
 }
 
-/* TAB SWITCH */
+/* ============================
+   TAB SWITCH (INCOME/EXPENSE)
+============================ */
+
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -25,8 +43,12 @@ document.querySelectorAll(".tab").forEach(tab => {
   });
 });
 
-/* ADD TRANSACTION */
+/* ============================
+   ADD TRANSACTION
+============================ */
+
 addBtn.addEventListener("click", addTransaction);
+
 amountInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") addTransaction();
 });
@@ -38,13 +60,15 @@ function addTransaction() {
 
   if (!title || !amount || !category) return;
 
-  transactions.push({
+  const entry = {
     title,
     amount,
     category,
     type: currentType,
     date: new Date().toISOString().slice(0, 10)
-  });
+  };
+
+  transactions.push(entry);
 
   save();
   render();
@@ -57,28 +81,39 @@ function clearInputs() {
   categoryInput.value = "";
 }
 
-function save() {
-  localStorage.setItem("transactions", JSON.stringify(transactions));
-}
+/* ============================
+   DELETE TRANSACTION
+============================ */
 
-/* DELETE */
 function deleteTransaction(index) {
   transactions.splice(index, 1);
   save();
   render();
 }
 
-/* RENDER */
+/* ============================
+   SAVE
+============================ */
+
+function save() {
+  localStorage.setItem("transactions", JSON.stringify(transactions));
+}
+
+/* ============================
+   RENDER LIST + SUMMARY
+============================ */
+
 function render() {
   list.innerHTML = "";
 
   if (transactions.length === 0) {
-    list.innerHTML = "<p style='opacity:0.6; text-align:center;'>No transactions yet.</p>";
+    list.innerHTML = "<p style='opacity:0.6;text-align:center;'>No transactions yet.</p>";
     updateSummary(0, 0);
     return;
   }
 
-  let income = 0, expense = 0;
+  let income = 0;
+  let expense = 0;
 
   transactions.forEach((t, index) => {
     if (t.type === "income") income += t.amount;
@@ -86,11 +121,13 @@ function render() {
 
     const li = document.createElement("li");
     li.className = "transaction";
+
     li.innerHTML = `
       <div>
         <strong>${t.title}</strong> — ${formatMoney(t.amount)}<br>
         <small>${t.category} · ${t.date}</small>
       </div>
+
       <div class="delete" onclick="deleteTransaction(${index})">✕</div>
     `;
 
@@ -100,16 +137,26 @@ function render() {
   updateSummary(income, expense);
 }
 
+/* ============================
+   SUMMARY CARDS
+============================ */
+
 function updateSummary(income, expense) {
-  incomeCard.textContent = `Income: ${formatMoney(income)}`;
+  incomeCard.textContent  = `Income: ${formatMoney(income)}`;
   expenseCard.textContent = `Expenses: ${formatMoney(expense)}`;
   balanceCard.textContent = `Balance: ${formatMoney(income - expense)}`;
 }
 
-/* THEME TOGGLE */
+/* ============================
+   THEME TOGGLE
+============================ */
+
 document.getElementById("themeToggle").addEventListener("click", () => {
   document.body.classList.toggle("oled");
 });
 
-/* INITIAL */
+/* ============================
+   INITIAL RENDER
+============================ */
+
 render();
