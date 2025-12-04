@@ -1,159 +1,115 @@
-/* ============================
-   Finance Dashboard - script.js
-   Compatible with the updated HTML/CSS
-============================= */
-
 let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 let currentType = "expense";
 
-/* --- DOM --- */
 const titleInput = document.getElementById("titleInput");
 const amountInput = document.getElementById("amountInput");
-const categorySelect = document.getElementById("categorySelect");
-const submitBtn = document.getElementById("submitBtn");
-
-const addExpenseBtn = document.getElementById("addExpenseBtn");
-const addIncomeBtn = document.getElementById("addIncomeBtn");
-
+const categoryInput = document.getElementById("categoryInput");
+const addBtn = document.getElementById("addBtn");
 const list = document.getElementById("transactionList");
 
-const incomeSpan = document.getElementById("income");
-const expensesSpan = document.getElementById("expenses");
-const balanceSpan = document.getElementById("balance");
+const incomeCard = document.getElementById("incomeCard");
+const expenseCard = document.getElementById("expenseCard");
+const balanceCard = document.getElementById("balanceCard");
 
-const themeToggle = document.getElementById("themeToggle");
-
-/* ============================
-   UTILITIES
-============================= */
-
-function save() {
-  localStorage.setItem("transactions", JSON.stringify(transactions));
+/* FORMAT MONEY */
+function formatMoney(num) {
+  return "₹" + num.toLocaleString("en-IN");
 }
 
-function clearInputs() {
-  titleInput.value = "";
-  amountInput.value = "";
-  categorySelect.selectedIndex = 0;
-}
-
-/* ============================
-   RENDER
-============================= */
-
-function render() {
-  list.innerHTML = "";
-
-  let income = 0;
-  let expense = 0;
-
-  transactions.forEach((t, index) => {
-    if (t.type === "income") income += t.amount;
-    else expense += t.amount;
-
-    const li = document.createElement("li");
-    li.className = "transaction-item";
-    li.innerHTML = `
-      <div>
-        <strong>${escapeHtml(t.title)}</strong> — ₹${t.amount.toLocaleString()}<br>
-        <small style="opacity:.8">${escapeHtml(t.category)} · ${t.date}</small>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <div style="font-size:14px;opacity:.85">${t.type === 'income' ? 'Income' : 'Expense'}</div>
-        <div class="delete" style="cursor:pointer;opacity:.8" data-index="${index}">✕</div>
-      </div>
-    `;
-
-    list.appendChild(li);
+/* TAB SWITCH */
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    currentType = tab.dataset.type;
   });
+});
 
-  incomeSpan.textContent = income.toLocaleString();
-  expensesSpan.textContent = expense.toLocaleString();
-  balanceSpan.textContent = (income - expense).toLocaleString();
-}
+/* ADD TRANSACTION */
+addBtn.addEventListener("click", addTransaction);
+amountInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") addTransaction();
+});
 
-/* simple HTML escape for user input */
-function escapeHtml(str) {
-  if (!str) return "";
-  return str.replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]));
-}
-
-/* ============================
-   ADD TRANSACTION
-============================= */
-
-submitBtn.addEventListener("click", () => {
+function addTransaction() {
   const title = titleInput.value.trim();
-  const amount = Number(amountInput.value);
-  const category = categorySelect.value;
+  const amount = Number(amountInput.value.trim());
+  const category = categoryInput.value;
 
-  if (!title || !amount || !category) {
-    // lightweight validation — you can replace with a nicer UI later
-    return;
-  }
-
-  const today = new Date();
-  const isoDate = today.toISOString().slice(0, 10);
+  if (!title || !amount || !category) return;
 
   transactions.push({
     title,
     amount,
     category,
     type: currentType,
-    date: isoDate
+    date: new Date().toISOString().slice(0, 10)
   });
 
   save();
   render();
   clearInputs();
-});
-
-/* allow Enter on amount to add quickly */
-amountInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") submitBtn.click();
-});
-
-/* ============================
-   TOGGLE TYPE (expense / income)
-============================= */
-
-function setType(type) {
-  currentType = type;
-  addExpenseBtn.classList.toggle("active", type === "expense");
-  addIncomeBtn.classList.toggle("active", type === "income");
-  // change submit button text for clarity
-  submitBtn.textContent = type === "income" ? "Add Income" : "Add Entry";
 }
 
-addExpenseBtn.addEventListener("click", () => setType("expense"));
-addIncomeBtn.addEventListener("click", () => setType("income"));
+function clearInputs() {
+  titleInput.value = "";
+  amountInput.value = "";
+  categoryInput.value = "";
+}
 
-/* ============================
-   DELETE (event delegation)
-============================= */
+function save() {
+  localStorage.setItem("transactions", JSON.stringify(transactions));
+}
 
-list.addEventListener("click", (e) => {
-  const del = e.target.closest(".delete");
-  if (!del) return;
-  const idx = Number(del.getAttribute("data-index"));
-  if (Number.isInteger(idx)) {
-    transactions.splice(idx, 1);
-    save();
-    render();
+/* DELETE */
+function deleteTransaction(index) {
+  transactions.splice(index, 1);
+  save();
+  render();
+}
+
+/* RENDER */
+function render() {
+  list.innerHTML = "";
+
+  if (transactions.length === 0) {
+    list.innerHTML = "<p style='opacity:0.6; text-align:center;'>No transactions yet.</p>";
+    updateSummary(0, 0);
+    return;
   }
-});
 
-/* ============================
-   THEME (OLED-like)
-============================= */
+  let income = 0, expense = 0;
 
-themeToggle.addEventListener("click", () => {
+  transactions.forEach((t, index) => {
+    if (t.type === "income") income += t.amount;
+    else expense += t.amount;
+
+    const li = document.createElement("li");
+    li.className = "transaction";
+    li.innerHTML = `
+      <div>
+        <strong>${t.title}</strong> — ${formatMoney(t.amount)}<br>
+        <small>${t.category} · ${t.date}</small>
+      </div>
+      <div class="delete" onclick="deleteTransaction(${index})">✕</div>
+    `;
+
+    list.appendChild(li);
+  });
+
+  updateSummary(income, expense);
+}
+
+function updateSummary(income, expense) {
+  incomeCard.textContent = `Income: ${formatMoney(income)}`;
+  expenseCard.textContent = `Expenses: ${formatMoney(expense)}`;
+  balanceCard.textContent = `Balance: ${formatMoney(income - expense)}`;
+}
+
+/* THEME TOGGLE */
+document.getElementById("themeToggle").addEventListener("click", () => {
   document.body.classList.toggle("oled");
 });
 
-/* ============================
-   INITIAL
-============================= */
-
-setType("expense"); // default
+/* INITIAL */
 render();
