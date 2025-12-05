@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Finance Tracker</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="app-container">
+
+  <div class="app">
 
     <h1>Finance Tracker</h1>
 
-    <!-- TABS -->
     <div class="tabs">
-      <div class="tab active" data-type="expense">Expense</div>
-      <div class="tab" data-type="income">Income</div>
-      <div id="themeToggle">🌙</div>
+      <button class="tab active" data-type="expense">Expense</button>
+      <button class="tab" data-type="income">Income</button>
+      <button id="themeToggle">🌙</button>
     </div>
 
-    <!-- INPUTS -->
-    <div class="input-box">
-      <input id="titleInput" type="text" placeholder="Title (e.g., Salary, Groceries)" />
-      <input id="amountInput" type="number" placeholder="Amount in ₹" />
+    <div class="form">
+      <input type="text" id="titleInput" placeholder="Title (e.g. Coffee)">
+      <input type="number" id="amountInput" placeholder="Amount ₹">
+
       <select id="categoryInput">
-        <option value="">Select category…</option>
+        <option value="">Select category</option>
         <option>Food</option>
         <option>Travel</option>
-        <option>Salary</option>
         <option>Shopping</option>
-        <option>Bills</option>
+        <option>Salary</option>
+        <option>Other</option>
       </select>
+
       <button id="addBtn">Add</button>
     </div>
 
-    <!-- SUMMARY CARDS -->
-    <div class="cards">
-      <div class="card" id="incomeCard">Income: ₹0</div>
-      <div class="card" id="expenseCard">Expenses: ₹0</div>
-      <div class="card" id="balanceCard">Balance: ₹0</div>
+    <div class="summary">
+      <div id="incomeCard">Income: ₹0</div>
+      <div id="expenseCard">Expenses: ₹0</div>
+      <div id="balanceCard">Balance: ₹0</div>
     </div>
 
-    <!-- LIST -->
     <ul id="transactionList"></ul>
 
   </div>
 
+  <!-- IMPORTANT: JS ALWAYS AT BOTTOM -->
   <script src="script.js"></script>
 </body>
 </html>
