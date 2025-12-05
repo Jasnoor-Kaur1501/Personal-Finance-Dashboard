@@ -1,19 +1,16 @@
 let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 let currentType = "expense";
 
-const titleInput   = document.getElementById("titleInput");
-const amountInput  = document.getElementById("amountInput");
-const categoryInput= document.getElementById("categoryInput");
-const addBtn       = document.getElementById("addBtn");
+const titleInput    = document.getElementById("titleInput");
+const amountInput   = document.getElementById("amountInput");
+const categoryInput = document.getElementById("categoryInput");
+const addBtn        = document.getElementById("addBtn");
 
-const incomeCard   = document.getElementById("incomeCard");
-const expenseCard  = document.getElementById("expenseCard");
-const balanceCard  = document.getElementById("balanceCard");
+const incomeCard    = document.getElementById("incomeCard");
+const expenseCard   = document.getElementById("expenseCard");
+const balanceCard   = document.getElementById("balanceCard");
 
-const list         = document.getElementById("transactionList");
-
-/* ✅ CONFIRM JS IS RUNNING */
-console.log("Finance JS connected");
+const list          = document.getElementById("transactionList");
 
 /* Tabs */
 document.querySelectorAll(".tab").forEach(tab => {
@@ -24,7 +21,7 @@ document.querySelectorAll(".tab").forEach(tab => {
   });
 });
 
-/* Add */
+/* Add Entry */
 addBtn.addEventListener("click", addTransaction);
 amountInput.addEventListener("keypress", e => {
   if (e.key === "Enter") addTransaction();
@@ -42,7 +39,7 @@ function addTransaction() {
     amount,
     category,
     type: currentType,
-    date: new Date().toISOString().slice(0,10)
+    date: new Date().toISOString().slice(0, 10)
   });
 
   save();
@@ -74,7 +71,7 @@ function render() {
 
   if (transactions.length === 0) {
     list.innerHTML = "<p style='opacity:0.6;text-align:center;'>No transactions yet</p>";
-    updateSummary(0,0);
+    updateSummary(0, 0);
     return;
   }
 
@@ -106,11 +103,6 @@ function updateSummary(income, expense) {
   expenseCard.textContent = `Expenses: ₹${expense}`;
   balanceCard.textContent = `Balance: ₹${income - expense}`;
 }
-
-/* Theme */
-document.getElementById("themeToggle").addEventListener("click", () => {
-  document.body.classList.toggle("oled");
-});
 
 /* Init */
 render();
