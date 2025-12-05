@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Finance Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,11 +11,11 @@
   <div class="app">
 
     <h1>Finance Tracker</h1>
+    <p class="subtitle">Track your daily money, simply.</p>
 
     <div class="tabs">
       <button class="tab active" data-type="expense">Expense</button>
       <button class="tab" data-type="income">Income</button>
-      <button id="themeToggle">🌙</button>
     </div>
 
     <div class="form">
@@ -27,23 +28,23 @@
         <option>Travel</option>
         <option>Shopping</option>
         <option>Salary</option>
+        <option>Bills</option>
         <option>Other</option>
       </select>
 
-      <button id="addBtn">Add</button>
+      <button id="addBtn">Add Entry</button>
     </div>
 
     <div class="summary">
-      <div id="incomeCard">Income: ₹0</div>
-      <div id="expenseCard">Expenses: ₹0</div>
-      <div id="balanceCard">Balance: ₹0</div>
+      <div class="card" id="incomeCard">Income: ₹0</div>
+      <div class="card" id="expenseCard">Expenses: ₹0</div>
+      <div class="card" id="balanceCard">Balance: ₹0</div>
     </div>
 
     <ul id="transactionList"></ul>
 
   </div>
 
-  <!-- IMPORTANT: JS ALWAYS AT BOTTOM -->
   <script src="script.js"></script>
 </body>
 </html>
