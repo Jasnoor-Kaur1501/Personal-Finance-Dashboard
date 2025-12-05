@@ -6,45 +6,55 @@
 }
 
 body {
-  background: #1c1f26;
-  color: white;
+  background: #f5f7fb;
   display: flex;
   justify-content: center;
   padding: 40px;
+  color: #1f2937;
 }
 
 .app {
-  width: 380px;
-  background: rgba(255,255,255,0.06);
-  padding: 25px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.12);
+  width: 390px;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.6;
+  margin-bottom: 18px;
 }
 
 /* Tabs */
 .tabs {
   display: flex;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
-.tab, #themeToggle {
+.tab {
   flex: 1;
   padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255,255,255,0.08);
-  color: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .tab.active {
-  background: rgba(255,255,255,0.25);
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
 }
 
 /* Form */
@@ -56,35 +66,40 @@ h1 {
 }
 
 input, select {
-  padding: 10px;
+  padding: 12px;
   border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.08);
-  color: white;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 14px;
 }
 
 #addBtn {
-  background: #6b7cff;
+  background: #10b981;
   border: none;
+  color: white;
   cursor: pointer;
+  padding: 12px;
+  border-radius: 10px;
+  transition: 0.2s;
 }
 
 #addBtn:hover {
-  background: #8895ff;
+  background: #059669;
 }
 
 /* Summary */
 .summary {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 18px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.summary div {
-  padding: 10px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
+.card {
+  padding: 12px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
 }
 
 /* List */
@@ -96,17 +111,18 @@ input, select {
   display: flex;
   justify-content: space-between;
   padding: 12px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
   margin-bottom: 10px;
+  transition: 0.2s;
+}
+
+.transaction:hover {
+  background: #f1f5f9;
 }
 
 .delete {
   cursor: pointer;
-  opacity: 0.7;
-}
-
-/* OLED */
-body.oled {
-  background: #000;
+  opacity: 0.6;
 }
