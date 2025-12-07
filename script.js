@@ -103,34 +103,7 @@ function updateSummary(income, expense) {
   expenseCard.textContent = `Expenses: ₹${expense}`;
   balanceCard.textContent = `Balance: ₹${income - expense}`;
 }
-let monthlyBudget = Number(localStorage.getItem("budget")) || 0;
-
-const budgetInput = document.getElementById("budgetInput");
-const saveBudgetBtn = document.getElementById("saveBudget");
-const budgetBar = document.getElementById("budgetBar");
-const budgetText = document.getElementById("budgetText");
-
-saveBudgetBtn.addEventListener("click", () => {
-  monthlyBudget = Number(budgetInput.value);
-  localStorage.setItem("budget", monthlyBudget);
-  updateBudget();
-  budgetInput.value = "";
-});
-
-function updateBudget() {
-  if (!monthlyBudget) return;
-
-  const totalExpense = transactions
-    .filter(t => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  const percent = Math.min((totalExpense / monthlyBudget) * 100, 100);
-  budgetBar.style.width = percent + "%";
-  budgetText.textContent = `${Math.round(percent)}% of budget used`;
-}
-
 
 /* Init */
 render();
-updateBudget();
 
