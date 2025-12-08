@@ -6,17 +6,21 @@ const amountInput   = document.getElementById("amountInput");
 const categoryInput = document.getElementById("categoryInput");
 const addBtn        = document.getElementById("addBtn");
 
-const incomeCard    = document.getElementById("incomeCard");
-const expenseCard   = document.getElementById("expenseCard");
-const balanceCard   = document.getElementById("balanceCard");
+const incomeCard  = document.getElementById("incomeCard");
+const expenseCard = document.getElementById("expenseCard");
+const balanceCard = document.getElementById("balanceCard");
 
-const list          = document.getElementById("transactionList");
-
+const list        = document.getElementById("transactionList");
 const monthFilter = document.getElementById("monthFilter");
+
 monthFilter.addEventListener("change", render);
 
+/* FORMAT */
+function formatMoney(num) {
+  return "₹" + num.toLocaleString("en-IN");
+}
 
-/* Tabs */
+/* TABS */
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -25,7 +29,7 @@ document.querySelectorAll(".tab").forEach(tab => {
   });
 });
 
-/* Add Entry */
+/* ADD ENTRY */
 addBtn.addEventListener("click", addTransaction);
 amountInput.addEventListener("keypress", e => {
   if (e.key === "Enter") addTransaction();
@@ -57,58 +61,19 @@ function clearInputs() {
   categoryInput.value = "";
 }
 
-/* Save */
+/* SAVE */
 function save() {
   localStorage.setItem("transactions", JSON.stringify(transactions));
 }
 
-/* Delete */
+/* DELETE */
 function deleteTransaction(index) {
   transactions.splice(index, 1);
   save();
   render();
 }
 
-/* Render */
-function render() {
-  list.innerHTML = "";
-
-  if (transactions.length === 0) {
-    list.innerHTML = "<p style='opacity:0.6;text-align:center;'>No transactions yet</p>";
-    updateSummary(0, 0);
-    return;
-  }
-
-  let income = 0, expense = 0;
-
-  transactions.forEach((t, index) => {
-    if (t.type === "income") income += t.amount;
-    else expense += t.amount;
-
-    const li = document.createElement("li");
-    li.className = "transaction";
-
-    li.innerHTML = `
-      <div>
-        <strong>${t.title}</strong> — ₹${t.amount}<br>
-        <small>${t.category} · ${t.date}</small>
-      </div>
-      <div class="delete" onclick="deleteTransaction(${index})">✕</div>
-    `;
-
-    list.appendChild(li);
-  });
-
-  updateSummary(income, expense);
-}
-
-function updateSummary(income, expense) {
-  incomeCard.textContent  = `Income: ₹${income}`;
-  expenseCard.textContent = `Expenses: ₹${expense}`;
-  balanceCard.textContent = `Balance: ₹${income - expense}`;
-}
-
-/* Init */
+/* RENDER + MONTH FILTER */
 function render() {
   list.innerHTML = "";
 
@@ -128,12 +93,12 @@ function render() {
 
     if (monthFilter.value === "previous") {
       const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
-      const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+      const prevYear  = currentMonth === 0 ? currentYear - 1 : currentYear;
 
       return date.getMonth() === prevMonth && date.getFullYear() === prevYear;
     }
 
-    return true; // all time
+    return true;
   });
 
   if (filtered.length === 0) {
@@ -161,4 +126,12 @@ function render() {
   updateSummary(income, expense);
 }
 
+/* SUMMARY */
+function updateSummary(income, expense) {
+  incomeCard.textContent  = `Income: ${formatMoney(income)}`;
+  expenseCard.textContent = `Expenses: ${formatMoney(expense)}`;
+  balanceCard.textContent = `Balance: ${formatMoney(income - expense)}`;
+}
 
+/* INIT */
+render();
