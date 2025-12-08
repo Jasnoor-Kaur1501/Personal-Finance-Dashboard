@@ -2,16 +2,24 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Inter, Arial, sans-serif;
+font-family: Inter, system-ui, sans-serif; 
 }
 
+
 body {
-  background: #f5f7fb;
+  background: linear-gradient(180deg, #f4f6fb, #e9edf5);
+  font-family: Inter, system-ui, sans-serif;
   display: flex;
   justify-content: center;
-  padding: 40px;
-  color: #1f2937;
+  padding: 50px;
+  color: #0f172a;
 }
+
+body.oled {
+  background: linear-gradient(180deg, #0e1118, #151a23);
+  color: #e5e7eb;
+}
+
 
 .app {
   width: 390px;
@@ -57,6 +65,22 @@ h1 {
   border-color: #2563eb;
 }
 
+.tracker-container,
+.dashboard-container {
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+body.oled .tracker-container,
+body.oled .dashboard-container {
+  background: rgba(20,24,34,0.7);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+
 /* Form */
 .form {
   display: flex;
@@ -88,12 +112,20 @@ input, select {
 }
 
 /* Summary */
-.summary {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+.finance-card {
+  flex: 1;
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff, #f3f6ff);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  font-weight: 600;
 }
+
+body.oled .finance-card {
+  background: linear-gradient(135deg, #1b2130, #141926);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+}
+
 
 .card {
   padding: 12px;
@@ -140,3 +172,14 @@ input, select {
   cursor: pointer;
   opacity: 0.6;
 }
+button, .transaction, .project-card {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+button:hover,
+.transaction:hover,
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
