@@ -12,6 +12,10 @@ const balanceCard   = document.getElementById("balanceCard");
 
 const list          = document.getElementById("transactionList");
 
+const monthFilter = document.getElementById("monthFilter");
+monthFilter.addEventListener("change", render);
+
+
 /* Tabs */
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
@@ -105,5 +109,56 @@ function updateSummary(income, expense) {
 }
 
 /* Init */
-render();
+function render() {
+  list.innerHTML = "";
+
+  let income = 0;
+  let expense = 0;
+
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  const filtered = transactions.filter(t => {
+    const date = new Date(t.date);
+
+    if (monthFilter.value === "current") {
+      return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+    }
+
+    if (monthFilter.value === "previous") {
+      const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+      const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+      return date.getMonth() === prevMonth && date.getFullYear() === prevYear;
+    }
+
+    return true; // all time
+  });
+
+  if (filtered.length === 0) {
+    list.innerHTML = "<p style='opacity:0.6;text-align:center;'>No transactions.</p>";
+  }
+
+  filtered.forEach((t, index) => {
+    if (t.type === "income") income += t.amount;
+    else expense += t.amount;
+
+    const li = document.createElement("li");
+    li.className = "transaction";
+
+    li.innerHTML = `
+      <div>
+        <strong>${t.title}</strong> — ${formatMoney(t.amount)}<br>
+        <small>${t.category} · ${t.date}</small>
+      </div>
+      <div class="delete" onclick="deleteTransaction(${index})">✕</div>
+    `;
+
+    list.appendChild(li);
+  });
+
+  updateSummary(income, expense);
+}
+
 
