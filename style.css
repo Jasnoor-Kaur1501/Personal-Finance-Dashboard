@@ -33,7 +33,7 @@ h1 {
   margin-bottom: 18px;
 }
 
-/* TABS */
+/* Tabs */
 .tabs {
   display: flex;
   gap: 10px;
@@ -52,10 +52,9 @@ h1 {
 .tab.active {
   background: #2563eb;
   color: white;
-  border-color: #2563eb;
 }
 
-/* FORM */
+/* Form */
 .form {
   display: flex;
   flex-direction: column;
@@ -68,7 +67,6 @@ input, select {
   border-radius: 10px;
   border: 1px solid #e5e7eb;
   background: #f9fafb;
-  font-size: 14px;
 }
 
 #addBtn {
@@ -78,13 +76,13 @@ input, select {
   cursor: pointer;
   padding: 12px;
   border-radius: 10px;
-  transition: 0.2s;
 }
 
 #addBtn:hover {
   background: #059669;
 }
 
+/* Month */
 .month-filter {
   width: 100%;
   padding: 10px;
@@ -94,7 +92,7 @@ input, select {
   margin-bottom: 16px;
 }
 
-/* SUMMARY */
+/* Summary */
 .summary {
   display: flex;
   gap: 10px;
@@ -111,7 +109,7 @@ input, select {
   text-align: center;
 }
 
-/* LIST */
+/* List */
 #transactionList {
   list-style: none;
 }
@@ -126,14 +124,16 @@ input, select {
   margin-bottom: 10px;
 }
 
-.transaction:hover {
-  background: #f1f5f9;
+.transaction small {
+  margin-top: 6px;
+  opacity: 0.7;
 }
 
 .delete {
   cursor: pointer;
   opacity: 0.6;
 }
+
 .delete:hover {
   opacity: 1;
 }
